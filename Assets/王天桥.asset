@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee41b05cf9d73d4a9857368849721d8, type: 3}
+  m_Name: "\u738B\u5929\u6865"
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: moduleAdaptability
+      Entry: 6
+      Data: 
+  monsterIcon: {fileID: 0}
+  monsterSpecificName: "\u738B\u5929\u6865"
+  monsterID: 0
+  monsterSpecificLevel: 0
+  birthModule: {fileID: 11400000, guid: 974fc062205e5d74ca472f44563d289d, type: 2}
+  monsterDetail: 
