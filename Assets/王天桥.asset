@@ -27,6 +27,6 @@ MonoBehaviour:
   monsterIcon: {fileID: 0}
   monsterSpecificName: "\u738B\u5929\u6865"
   monsterID: 0
-  monsterSpecificLevel: 0
+  monsterSpecificLevel: 50
   birthModule: {fileID: 11400000, guid: 974fc062205e5d74ca472f44563d289d, type: 2}
-  monsterDetail: 
+  monsterDetail: a

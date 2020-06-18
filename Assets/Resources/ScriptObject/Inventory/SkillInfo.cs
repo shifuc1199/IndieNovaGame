@@ -5,8 +5,17 @@ using UnityEngine;
 /// <summary>
 /// 模块信息类,用于实例化实时管理玩家游戏中的技能信息
 /// </summary>
-public class SkillInfo : SerializedScriptableObject
+public class SkillInfo    
 {
+    public SkillInfo()
+    {
+        
+    }
+
+    public SkillInfo(SkillSet set)
+    {
+        skillSet = set;
+    }
     /// <summary>
     /// 技能预设引用
     /// </summary>

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tools.Monster;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 public class MonsterController : MonoBehaviour
 {
     private const string DOWNABLE_PLATFORM_LAYER = "DownablePlatform";
-    private MonsterInfo monsterInfo;
+    
     private Rigidbody2D _rigi2D;
     private MonsterControlInput _input ;
 
@@ -17,13 +18,20 @@ public class MonsterController : MonoBehaviour
     public Transform GroundCheck;
 
     private bool isGround = false;
+     
+    public AssetReference monsterSet;
     // Start is called before the first frame update
     void Awake()
     {
         _rigi2D = GetComponent<Rigidbody2D>();
         _input = new MonsterControlInput();
         _input.MonsterControll.Jump.performed += callBack=>Jump();
-       
+
+        monsterSet.LoadAssetAsync<MonsterSet>().Completed += op =>
+        {
+            GloablManager.Instance.PlayerInfo.currentMonster = new MonsterInfo(op.Result);
+        };
+        
     }
 
     private void OnEnable()
