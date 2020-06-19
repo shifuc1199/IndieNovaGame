@@ -14,24 +14,25 @@ public class MonsterInfo
         
         
     }
+
     public MonsterInfo(MonsterSet monsterSet)
     {
         this.monsterSet = monsterSet;
-        
-        EquipModule(new ModuleInfo(monsterSet.birthModule,5));
-        
-        containerLevel += monsterSet.monsterSpecificLevel;
+        EquipModule(new ModuleInfo(monsterSet.birthModule, 5));
+        containerLevel = monsterSet.monsterSpecificLevel;
     }
+
+     
     /// <summary>
    /// 怪物预设引用
    /// </summary>
-    public MonsterSet monsterSet;
+    public MonsterSet monsterSet { get; private set; }
     /// <summary>
     /// 怪物模块点数,用来手动升级模块
     /// </summary>
     public int monsterModulePoint;
-
-    public Dictionary<MonsterRealTimeField, bool> monsterRealimeField;
+ 
+    public Dictionary<MonsterRealTimeField, bool> monsterRealimeField = new Dictionary<MonsterRealTimeField, bool>();
     /// <summary>
     /// 怪物实时属性
     /// </summary>
@@ -55,11 +56,48 @@ public class MonsterInfo
     /// <summary>
     /// 怪物所装备的技能列表
     /// </summary>
-    public List<SkillInfo> monEquipSkillInfos = new List<SkillInfo>();
+    public List<SkillInfo> monSkillPool = new List<SkillInfo>();
     /// <summary>
     /// 生效的技能列表
     /// </summary>
-    public List<SkillInfo> monSkillInfos = new List<SkillInfo>();
+    public List<SkillInfo> monEquipSkill = new List<SkillInfo>();
+
+ 
+    public void EquipModuleLevelUp(ModuleInfo moduleInfo)
+    {
+         
+        if (monModuleInfos.Contains(moduleInfo))
+        {
+            moduleInfo.LevelUp();
+            switch (moduleInfo.moduleSet.moduleTypeField)
+            {
+                case ModuleSet.moduleType.种族模块:
+                    levelNow++;
+                    break;
+                case ModuleSet.moduleType.扩展模块:
+                    containerLevel++;
+                    break;
+                case ModuleSet.moduleType.通用模块:
+                    levelNow++;
+                    break;
+            }
+            GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipModuleLevelUp);
+        }
+    }
+    public bool EquipModuleLevelUpable(ModuleInfo moduleInfo)
+    {
+ 
+        switch (moduleInfo.moduleSet.moduleTypeField)
+        {
+            case ModuleSet.moduleType.种族模块:
+                return  monsterSet.monsterSpecificLevel - levelNow >=1;
+            case ModuleSet.moduleType.扩展模块:
+                return true;
+            case ModuleSet.moduleType.通用模块:
+                return monsterSet.monsterSpecificLevel - levelNow >=1;
+        }
+        return false;
+    }
     public bool ModuleEquipable(ModuleInfo moduleInfo)
     {
         switch (moduleInfo.moduleSet.moduleTypeField)
@@ -76,15 +114,32 @@ public class MonsterInfo
         return false;
     }
 
+    public void SetRealTimeField(MonsterRealTimeField realTimeField, bool value)
+    {
+        if (!monsterRealimeField.ContainsKey(realTimeField))
+        {
+            monsterRealimeField.Add(realTimeField,value);    
+        }
+        else
+        {
+            monsterRealimeField[realTimeField] = value;
+        }
+    }
     public void AddSkillInfo(SkillInfo skillInfo)
     {
-        monSkillInfos.Add(skillInfo);
+        if (monEquipSkill.Exists(s=>s.skillSet == skillInfo.skillSet))
+            return;
+        
+        monEquipSkill.Add(skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.AddSkill,skillInfo);
     }
     public void EquipSkill(SkillInfo skillInfo)
     {
-        monEquipSkillInfos.Add(skillInfo);
+        skillInfo.skillSet.OnEquip(this);
+        monSkillPool.Add(skillInfo);
+        GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipSkill,skillInfo);
     }
+ 
     public void EquipModule(ModuleInfo moduleInfo)
     {
         monModuleInfos.Add(moduleInfo);
@@ -93,8 +148,11 @@ public class MonsterInfo
         {
             containerLevel += moduleInfo.moduleLevel;
         }
-
-        levelNow += moduleInfo.moduleLevel;
+        else
+        {
+            levelNow += moduleInfo.moduleLevel;
+        }
+         
         
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipModule,moduleInfo);
     }

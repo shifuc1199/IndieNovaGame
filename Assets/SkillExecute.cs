@@ -11,7 +11,7 @@ public abstract class SkillExecute
 
     public abstract void OnUnEquip(MonsterInfo monsterInfo);
 
-    public abstract void OnUpdate(MonsterInfo monsterInfo);
+    public abstract void OnUpdate(MonsterController controller);
 
 }
  

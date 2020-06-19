@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BagModuleCell : ModuleCell,IPointerDownHandler
+public class BagModuleCell : ModuleCell 
 {
-    public bool isEquipable;
-
+    
     private void Awake()
     {
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,UpdateEquipable);
@@ -18,6 +17,10 @@ public class BagModuleCell : ModuleCell,IPointerDownHandler
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,UpdateEquipable);
     }
 
+    public void Equip()
+    {
+        GloablManager.Instance.PlayerInfo.currentMonster.EquipModule(moduleInfo);
+    }
     public override void SetModel(ModuleInfo info)
     {
         base.SetModel(info);
@@ -25,20 +28,8 @@ public class BagModuleCell : ModuleCell,IPointerDownHandler
     }
     public void UpdateEquipable(ModuleInfo info=null)
     {
-        isEquipable = GloablManager.Instance.PlayerInfo.currentMonster.ModuleEquipable(moduleInfo);
-        if (!isEquipable)
-        {
-            GetComponent<Image>().color = Color.gray;
-        }
-       
+        var isEquipable = GloablManager.Instance.PlayerInfo.currentMonster.ModuleEquipable(moduleInfo);
+        GetComponent<Button>().interactable = isEquipable;
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (!isEquipable)
-        {
-            return;
-        } 
-        
-        GloablManager.Instance.PlayerInfo.currentMonster.EquipModule(moduleInfo);
-    }
+ 
 }

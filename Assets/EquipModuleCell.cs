@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EquipModuleCell : ModuleCell,IPointerDownHandler
+public class EquipModuleCell : ModuleCell 
 {
-   
-    public void OnPointerDown(PointerEventData eventData)
+    public void LevelUp()
     {
-        moduleInfo.LevelUp();
+        if (!GloablManager.Instance.PlayerInfo.currentMonster.EquipModuleLevelUpable(moduleInfo))
+            return;
+        GloablManager.Instance.PlayerInfo.currentMonster.EquipModuleLevelUp(moduleInfo);
         UpdateModel();
     }
 }

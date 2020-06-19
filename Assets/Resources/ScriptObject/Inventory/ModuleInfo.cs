@@ -17,6 +17,7 @@ public class ModuleInfo
  
         foreach (var skill in  moduleSet.moduleSkills)
         {
+            
             lockSkill.Add(new SkillInfo(skill.Key));
         }
     }
@@ -34,11 +35,13 @@ public class ModuleInfo
     public void LevelUp()
     {
         moduleLevel += 1;
+        
+         
         if(lockSkill.Count == 0)
             return;
         
         var skill = lockSkill[0];
-       
+        
         if (moduleLevel >= moduleSet.moduleSkills[skill.skillSet])
         {
             GloablManager.Instance.PlayerInfo.currentMonster.AddSkillInfo(skill);

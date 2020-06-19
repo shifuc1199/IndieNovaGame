@@ -50,11 +50,11 @@ public class SkillSet : SerializedScriptableObject
             skillExcute.OnUnEquip(monsterInfo);
         }
     }
-    public void OnUpdate(MonsterInfo monsterInfo)
+    public void OnUpdate(MonsterController controller)
     {
         foreach (var skillExcute in skillExecutes)
         {
-            skillExcute.OnUpdate(monsterInfo);
+            skillExcute.OnUpdate(controller);
         }
     }
 }

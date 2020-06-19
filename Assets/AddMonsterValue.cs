@@ -6,10 +6,11 @@ using UnityEngine;
 public class ChangeMonsterTag : SkillExecute
 {
      public MonsterRealTimeField field;
-     public bool ChangeValue;
+     public bool ChangeValue = true;
      public override void OnEquip(MonsterInfo monsterInfo)
      {
-          monsterInfo.monsterRealimeField[field] = ChangeValue;
+          monsterInfo.SetRealTimeField(field, ChangeValue);
+          
      }
 
      public override void OnUnEquip(MonsterInfo monsterInfo)
@@ -17,7 +18,7 @@ public class ChangeMonsterTag : SkillExecute
           monsterInfo.monsterRealimeField[field] = ! ChangeValue;
      }
 
-     public override void OnUpdate(MonsterInfo monsterInfo)
+     public override void OnUpdate(MonsterController controller)
      {
           
      }
@@ -43,7 +44,7 @@ public class AddMonsterValue : SkillExecute
           }
      }
 
-     public override void OnUpdate(MonsterInfo monsterInfo)
+     public override void OnUpdate(MonsterController controller)
      {
            
      }

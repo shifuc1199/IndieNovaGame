@@ -13,27 +13,62 @@ public class MonsterInfoView : MonoBehaviour
     {
         SetModel(GloablManager.Instance.PlayerInfo.currentMonster);
         InitBagModule();
+        GloablManager.Instance.EventManager.AddListener(EventTypeArg.EquipModuleLevelUp,UpdateMonsterLevelText);
         GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.AddSkill,SkillPoolAdd);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,RemoveBagModule);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,AddEquipModule);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.AddBagModule,AddBagModule);
+        GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.EquipSkill,AddEquipSkill);
     }
 
     private void OnDestroy()
     {
+        GloablManager.Instance.EventManager.RemoveListener(EventTypeArg.EquipModuleLevelUp,UpdateMonsterLevelText);
+        GloablManager.Instance.EventManager.RemoveListener<SkillInfo>(EventTypeArg.EquipSkill,AddEquipSkill);
         GloablManager.Instance.EventManager.RemoveListener<SkillInfo>(EventTypeArg.AddSkill,SkillPoolAdd);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,RemoveBagModule);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,AddEquipModule);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.AddBagModule,AddBagModule);
     }
     
-    #region *-----------------Skill---------------------*
+    #region *-----------------EquipSkill---------------------*
+
     public Transform skillEquip;
+    public Dictionary<SkillInfo,GameObject> equipSkillCell = new Dictionary<SkillInfo, GameObject>();
+    public void AddEquipSkill(SkillInfo skillInfo)
+    {
+        if (equipSkillCell.ContainsKey(skillInfo))
+        {
+            return;
+        }
+        var cell = Instantiate(skillCellPrefab, skillEquip);
+        cell.GetComponent<SkillCell>().SetModel(skillInfo); 
+        equipSkillCell.Add(skillInfo,cell);
+    }
+
+    public void RemoveEquipSkill(SkillInfo skillInfo)
+    {
+        if (equipSkillCell.ContainsKey(skillInfo))
+        {
+            Destroy(equipSkillCell[skillInfo]);
+            equipSkillCell.Remove(skillInfo);
+        }
+    }
+    
+    #endregion
+    
+    #region *-----------------SkillPool---------------------*
+    public Transform skillPool;
     public GameObject skillCellPrefab;
     Dictionary<SkillInfo,GameObject> skillPoolCell = new Dictionary<SkillInfo, GameObject>();
     public void SkillPoolAdd(SkillInfo skillInfo)
     {
-        var cell = Instantiate(skillCellPrefab, skillEquip);
+
+        if (skillPoolCell.ContainsKey(skillInfo))
+        {
+            return;
+        }
+        var cell = Instantiate(skillCellPrefab, skillPool);
         cell.GetComponent<SkillCell>().SetModel(skillInfo); 
         skillPoolCell.Add(skillInfo,cell);
     }
@@ -119,11 +154,17 @@ public class MonsterInfoView : MonoBehaviour
             cell.GetComponent<ModuleCell>().SetModel(module);
             equipModuleCell.Add(module,cell);
         }
-        foreach (var skiill in monster.monSkillInfos)
+        foreach (var skiill in monster.monEquipSkill)
+        {
+            var cell = Instantiate(skillCellPrefab, skillPool);
+            cell.GetComponent<SkillCell>().SetModel(skiill);
+            skillPoolCell.Add(skiill,cell);
+        }
+        foreach (var skiill in monster.monSkillPool)
         {
             var cell = Instantiate(skillCellPrefab, skillEquip);
             cell.GetComponent<SkillCell>().SetModel(skiill);
-            skillPoolCell.Add(skiill,cell);
+            equipSkillCell.Add(skiill,cell);
         }
         UpdateMonsterLevelText();
     }

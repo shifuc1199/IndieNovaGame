@@ -29,7 +29,8 @@
 
     public enum MonsterRealTimeField
     {
-        不可视,
+        二段跳,
+        
     }
     //怪物补正属性
     public enum MonsterStateV

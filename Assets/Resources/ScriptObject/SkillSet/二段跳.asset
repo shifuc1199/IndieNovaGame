@@ -30,13 +30,10 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|ChangeMonsterTag, Assembly-CSharp
-    - Name: field
+      Data: 1|JumpSkillExcute, Assembly-CSharp
+    - Name: maxJumpCount
       Entry: 3
-      Data: 0
-    - Name: ChangeValue
-      Entry: 5
-      Data: true
+      Data: 2
     - Name: 
       Entry: 8
       Data: 

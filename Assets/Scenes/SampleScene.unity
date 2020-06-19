@@ -922,6 +922,104 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1055445621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1055445622}
+  - component: {fileID: 1055445624}
+  - component: {fileID: 1055445623}
+  - component: {fileID: 1055445625}
+  m_Layer: 5
+  m_Name: EquipSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1055445622
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055445621}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1139763327}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 31.1, y: -194.39}
+  m_SizeDelta: {x: 415.9, y: 50.99}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1055445623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055445621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6509434, g: 0.4551579, b: 0.2794144, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1055445624
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055445621}
+  m_CullTransparentMesh: 0
+--- !u!114 &1055445625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055445621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 0
+    m_Top: 10
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 30, y: 30}
+  m_Spacing: {x: 10, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1092042107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1155,7 @@ RectTransform:
   - {fileID: 737751207}
   - {fileID: 1406872724}
   - {fileID: 136446351}
+  - {fileID: 1055445622}
   m_Father: {fileID: 1092042111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1114,7 +1213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelText: {fileID: 136446352}
-  skillEquip: {fileID: 1406872724}
+  skillEquip: {fileID: 1055445622}
+  skillPool: {fileID: 1406872724}
   skillCellPrefab: {fileID: 8212089684629912340, guid: c88797909306e53439a4d7b42a03b6e7,
     type: 3}
   bagModuleCellPrefab: {fileID: 1171024145917708612, guid: a75f8af87aa07a74da0c5827834a3eed,
@@ -1321,7 +1421,7 @@ GameObject:
   - component: {fileID: 1406872725}
   - component: {fileID: 1406872727}
   m_Layer: 5
-  m_Name: SkillEquip
+  m_Name: SkillPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2063,7 +2163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset:
-    m_AssetGUID: 6961253ed4fea5243915f5de8a8b5be5
+    m_AssetGUID: 0a5c492bb85d2624e9c7dc101e4ba22e
 --- !u!1 &1657707134
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,9 +2380,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34561717944299a468e48fffd09f2522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GroundCheck: {fileID: 1838330964}
+  moveInput: {x: 0, y: 0}
   jumpSpeed: 12
   moveSpeed: 5
-  GroundCheck: {fileID: 1838330964}
+  isGround: 0
   monsterSet:
     m_AssetGUID: 5234b8e9c286b3b4280bcd1d4a2f6673
 --- !u!4 &1814557283
