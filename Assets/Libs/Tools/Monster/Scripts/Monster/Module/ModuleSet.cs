@@ -45,7 +45,7 @@ public class ModuleSet : SerializedScriptableObject
     /// 模块技能表以及对应的解锁等级
     /// </summary>
     [InfoBox("key:模块拥有的技能,value:技能解锁需要的模块的等级")]
-    public Dictionary<SkillSet,int> moduleSkills;
+    public Dictionary<SkillSet,int> moduleSkills ;
     /// <summary>
     /// 模块对元素抗性的影响
     /// </summary>

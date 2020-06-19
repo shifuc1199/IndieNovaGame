@@ -11,7 +11,11 @@ public class ModuleCell : MonoBehaviour
     public virtual void SetModel(ModuleInfo info)
     {
         moduleInfo = info;
-        
-        infoText.text = info.moduleSet.moduleName + ": LV " + info.moduleLevel;
+        UpdateModel();
+    }
+
+    public void UpdateModel()
+    {
+        infoText.text = moduleInfo.moduleSet.moduleName + ": LV " + moduleInfo.moduleLevel;
     }
 }

@@ -1113,14 +1113,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1860bf8089140a449b315c57cb238fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moduleCellPrefab: {fileID: 1171024145917708612, guid: bf3db5943a13b754399b99f0915962ec,
+  levelText: {fileID: 136446352}
+  skillEquip: {fileID: 1406872724}
+  skillCellPrefab: {fileID: 8212089684629912340, guid: c88797909306e53439a4d7b42a03b6e7,
     type: 3}
   bagModuleCellPrefab: {fileID: 1171024145917708612, guid: a75f8af87aa07a74da0c5827834a3eed,
     type: 3}
-  moduleEquip: {fileID: 2108996126}
   moduleBag: {fileID: 737751207}
-  skillEquip: {fileID: 1406872724}
-  levelText: {fileID: 136446352}
+  moduleCellPrefab: {fileID: 1171024145917708612, guid: bf3db5943a13b754399b99f0915962ec,
+    type: 3}
+  moduleEquip: {fileID: 2108996126}
 --- !u!1 &1363628059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1319,7 @@ GameObject:
   - component: {fileID: 1406872724}
   - component: {fileID: 1406872726}
   - component: {fileID: 1406872725}
+  - component: {fileID: 1406872727}
   m_Layer: 5
   m_Name: SkillEquip
   m_TagString: Untagged
@@ -1379,6 +1382,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406872723}
   m_CullTransparentMesh: 0
+--- !u!114 &1406872727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406872723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 5
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 188.24, y: 47.57}
+  m_Spacing: {x: 0, y: 10}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1428257163
 GameObject:
   m_ObjectHideFlags: 0

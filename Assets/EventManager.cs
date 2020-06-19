@@ -7,7 +7,8 @@ using UnityEngine.Events;
 public enum EventTypeArg
 {
     AddBagModule,
-    EquipModule
+    EquipModule,
+    AddSkill
 }
 
 public class EventManager

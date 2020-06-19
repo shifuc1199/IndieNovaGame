@@ -14,7 +14,7 @@ public class ModuleInfo
     {
         this.moduleSet = moduleSet;
         this.moduleLevel = moduleLevel;
-
+ 
         foreach (var skill in  moduleSet.moduleSkills)
         {
             lockSkill.Add(new SkillInfo(skill.Key));
@@ -34,13 +34,16 @@ public class ModuleInfo
     public void LevelUp()
     {
         moduleLevel += 1;
+        if(lockSkill.Count == 0)
+            return;
+        
         var skill = lockSkill[0];
+       
         if (moduleLevel >= moduleSet.moduleSkills[skill.skillSet])
         {
             GloablManager.Instance.PlayerInfo.currentMonster.AddSkillInfo(skill);
-            
-            lockSkill.RemoveAt(0);
             unlockSkill.Add(skill);
+            lockSkill.RemoveAt(0); 
         }
     }
 }

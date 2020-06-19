@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class MonsterInfoView : MonoBehaviour
-{
-    Dictionary<ModuleInfo,GameObject> equipModuleCell = new Dictionary<ModuleInfo, GameObject>();
-    Dictionary<ModuleInfo,GameObject> bagModuleInfoCell = new Dictionary<ModuleInfo, GameObject>();
-    public GameObject moduleCellPrefab;
-    public GameObject bagModuleCellPrefab;
-    public Transform moduleEquip;
-    public Transform moduleBag;
-    public Transform skillEquip;
+{  
+    
+    
     private MonsterInfo _monsterInfo;
     public Text levelText;
     // Start is called before the first frame update
@@ -18,7 +13,7 @@ public class MonsterInfoView : MonoBehaviour
     {
         SetModel(GloablManager.Instance.PlayerInfo.currentMonster);
         InitBagModule();
- 
+        GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.AddSkill,SkillPoolAdd);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,RemoveBagModule);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,AddEquipModule);
         GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.AddBagModule,AddBagModule);
@@ -26,11 +21,37 @@ public class MonsterInfoView : MonoBehaviour
 
     private void OnDestroy()
     {
+        GloablManager.Instance.EventManager.RemoveListener<SkillInfo>(EventTypeArg.AddSkill,SkillPoolAdd);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,RemoveBagModule);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,AddEquipModule);
         GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.AddBagModule,AddBagModule);
     }
+    
+    #region *-----------------Skill---------------------*
+    public Transform skillEquip;
+    public GameObject skillCellPrefab;
+    Dictionary<SkillInfo,GameObject> skillPoolCell = new Dictionary<SkillInfo, GameObject>();
+    public void SkillPoolAdd(SkillInfo skillInfo)
+    {
+        var cell = Instantiate(skillCellPrefab, skillEquip);
+        cell.GetComponent<SkillCell>().SetModel(skillInfo); 
+        skillPoolCell.Add(skillInfo,cell);
+    }
 
+    public void SkillPoolRemove(SkillInfo skillInfo)
+    {
+        if (skillPoolCell.ContainsKey(skillInfo))
+        {
+            Destroy(skillPoolCell[skillInfo]);
+            skillPoolCell.Remove(skillInfo);
+        }
+    }
+    #endregion
+    
+    #region *-----------------BagModule---------------------*
+    Dictionary<ModuleInfo,GameObject> bagModuleInfoCell = new Dictionary<ModuleInfo, GameObject>();
+    public GameObject bagModuleCellPrefab;
+    public Transform moduleBag;
     public void InitBagModule()
     {
        var bagModules = GloablManager.Instance.PlayerInfo.playerPubModuleList;
@@ -42,7 +63,13 @@ public class MonsterInfoView : MonoBehaviour
            bagModuleInfoCell.Add(bagModule,cell);
        }
     }
-
+    public void AddBagModule(ModuleInfo moduleInfo)
+    {
+        var cell = Instantiate(bagModuleCellPrefab, moduleBag);
+        cell.GetComponent<ModuleCell>().SetModel(moduleInfo);
+        
+        bagModuleInfoCell.Add(moduleInfo,cell);
+    }
     public void RemoveBagModule(ModuleInfo info)
     {
         if (bagModuleInfoCell.ContainsKey(info))
@@ -51,21 +78,13 @@ public class MonsterInfoView : MonoBehaviour
             bagModuleInfoCell.Remove(info);
         }
     }
-    public void AddBagModule(ModuleInfo moduleInfo)
-    {
-        var cell = Instantiate(bagModuleCellPrefab, moduleBag);
-        cell.GetComponent<ModuleCell>().SetModel(moduleInfo);
-        
-        bagModuleInfoCell.Add(moduleInfo,cell);
-    }
-    public void RemoveEquipModule(ModuleInfo info)
-    {
-        if (equipModuleCell.ContainsKey(info))
-        {
-            Destroy(equipModuleCell[info]);
-            equipModuleCell.Remove(info);
-        }
-    }
+    
+    #endregion
+  
+    #region *-----------------EquipModule---------------------*
+    public GameObject moduleCellPrefab;
+    public Transform moduleEquip;
+    Dictionary<ModuleInfo,GameObject> equipModuleCell = new Dictionary<ModuleInfo, GameObject>();
     public void AddEquipModule(ModuleInfo moduleInfo)
     {
         var cell = Instantiate(moduleCellPrefab, moduleEquip);
@@ -75,7 +94,17 @@ public class MonsterInfoView : MonoBehaviour
 
         UpdateMonsterLevelText();
     }
-
+    public void RemoveEquipModule(ModuleInfo info)
+    {
+        if (equipModuleCell.ContainsKey(info))
+        {
+            Destroy(equipModuleCell[info]);
+            equipModuleCell.Remove(info);
+        }
+    }
+ 
+    #endregion  
+    
     public void UpdateMonsterLevelText()
     {
         levelText.text ="怪物等级："+_monsterInfo.levelNow+"/"+ _monsterInfo.monsterSet.monsterSpecificLevel+"\n容器等级: "+_monsterInfo.containerLevel;
@@ -90,7 +119,12 @@ public class MonsterInfoView : MonoBehaviour
             cell.GetComponent<ModuleCell>().SetModel(module);
             equipModuleCell.Add(module,cell);
         }
-
+        foreach (var skiill in monster.monSkillInfos)
+        {
+            var cell = Instantiate(skillCellPrefab, skillEquip);
+            cell.GetComponent<SkillCell>().SetModel(skiill);
+            skillPoolCell.Add(skiill,cell);
+        }
         UpdateMonsterLevelText();
     }
 }

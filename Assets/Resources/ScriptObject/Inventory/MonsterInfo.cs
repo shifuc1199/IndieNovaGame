@@ -79,6 +79,7 @@ public class MonsterInfo
     public void AddSkillInfo(SkillInfo skillInfo)
     {
         monSkillInfos.Add(skillInfo);
+        GloablManager.Instance.EventManager.BroadCast(EventTypeArg.AddSkill,skillInfo);
     }
     public void EquipSkill(SkillInfo skillInfo)
     {
