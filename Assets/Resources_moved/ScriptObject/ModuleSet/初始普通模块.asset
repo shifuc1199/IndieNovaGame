@@ -63,7 +63,7 @@ MonoBehaviour:
   moduleName: "\u521D\u59CB\u666E\u901A\u6A21\u5757"
   moduleIconA: {fileID: 0}
   moduleIconB: {fileID: 0}
-  moduleID: 0
+  moduleID: 2
   moduleTypeField: 1
   LevelEXP: 
   moduleDetail: 

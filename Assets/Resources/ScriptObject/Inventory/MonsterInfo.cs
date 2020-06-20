@@ -52,49 +52,40 @@ public class MonsterInfo
     /// <summary>
     /// 怪物所装备的模块列表
     /// </summary>
-    public List<ModuleInfo> monModuleInfos = new List<ModuleInfo>();
+    public Dictionary<int,ModuleInfo> monEquipModules = new Dictionary<int, ModuleInfo>();
     /// <summary>
-    /// 怪物所装备的技能列表
+    /// 怪物的技能池
     /// </summary>
-    public List<SkillInfo> monSkillPool = new List<SkillInfo>();
+    public Dictionary<int,SkillInfo> monSkillPool = new Dictionary<int, SkillInfo>();
     /// <summary>
     /// 生效的技能列表
     /// </summary>
     public List<SkillInfo> monEquipSkill = new List<SkillInfo>();
 
- 
-    public void EquipModuleLevelUp(ModuleInfo moduleInfo)
+    public void ChageLevelNow(int value)
     {
-         
-        if (monModuleInfos.Contains(moduleInfo))
+        levelNow += value;
+        GloablManager.Instance.EventManager.BroadCast(EventTypeArg.LevelNowChange);
+    }
+    //已装备模块的升级，会根据模块类型增加等级
+    public void EquipedModuleLevelUp(ModuleInfo moduleInfo)
+    {      
+        if (moduleInfo.moduleSet.moduleTypeField==ModuleSet.moduleType.扩展模块)
         {
-            moduleInfo.LevelUp();
-            switch (moduleInfo.moduleSet.moduleTypeField)
-            {
-                case ModuleSet.moduleType.种族模块:
-                    levelNow++;
-                    break;
-                case ModuleSet.moduleType.扩展模块:
-                    containerLevel++;
-                    break;
-                case ModuleSet.moduleType.通用模块:
-                    levelNow++;
-                    break;
-            }
-            GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipModuleLevelUp);
+            containerLevel++;
         }
+        ChageLevelNow(1);
     }
     public bool EquipModuleLevelUpable(ModuleInfo moduleInfo)
     {
- 
         switch (moduleInfo.moduleSet.moduleTypeField)
         {
             case ModuleSet.moduleType.种族模块:
-                return  monsterSet.monsterSpecificLevel - levelNow >=1;
+                return  containerLevel - levelNow >=1;
             case ModuleSet.moduleType.扩展模块:
                 return true;
             case ModuleSet.moduleType.通用模块:
-                return monsterSet.monsterSpecificLevel - levelNow >=1;
+                return containerLevel - levelNow >=1;
         }
         return false;
     }
@@ -107,9 +98,7 @@ public class MonsterInfo
             case ModuleSet.moduleType.扩展模块:
                 return true;
             case ModuleSet.moduleType.通用模块:
-                if (moduleInfo.moduleLevel > monsterSet.monsterSpecificLevel - levelNow)
-                    return false;
-                return true;
+                return containerLevel - levelNow >=1;
         }
         return false;
     }
@@ -125,33 +114,38 @@ public class MonsterInfo
             monsterRealimeField[realTimeField] = value;
         }
     }
-    public void AddSkillInfo(SkillInfo skillInfo)
+    public void AddSkillPool(SkillInfo skillInfo)
     {
-        if (monEquipSkill.Exists(s=>s.skillSet == skillInfo.skillSet))
+        skillInfo.countInSkillPool++;
+        if (monSkillPool.ContainsKey(skillInfo.skillSet.skillID))
+        { 
             return;
-        
-        monEquipSkill.Add(skillInfo);
+        }
+
+        monSkillPool.Add(skillInfo.skillSet.skillID,skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.AddSkill,skillInfo);
     }
     public void EquipSkill(SkillInfo skillInfo)
     {
         skillInfo.skillSet.OnEquip(this);
-        monSkillPool.Add(skillInfo);
+        monEquipSkill.Add(skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipSkill,skillInfo);
     }
  
     public void EquipModule(ModuleInfo moduleInfo)
     {
-        monModuleInfos.Add(moduleInfo);
+        moduleInfo.Equiped(this);
+        
+        monEquipModules.Add(moduleInfo.moduleSet.moduleID,moduleInfo);
         
         if ( moduleInfo.moduleSet.moduleTypeField == ModuleSet.moduleType.扩展模块)
         {
             containerLevel += moduleInfo.moduleLevel;
+           
         }
-        else
-        {
-            levelNow += moduleInfo.moduleLevel;
-        }
+        
+         ChageLevelNow(moduleInfo.moduleLevel);
+       
          
         
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipModule,moduleInfo);

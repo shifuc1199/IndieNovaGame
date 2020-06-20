@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Tools.Monster;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+
 /// <summary>
 /// 模块的预设文件类,存放模块初始的配置
 /// </summary>
@@ -59,4 +61,23 @@ public class ModuleSet : SerializedScriptableObject
     /// </summary>
     [TextArea]
     public String moduleDetail;
+    
+    private static Dictionary<int,ModuleSet> moduleSets= new Dictionary<int, ModuleSet>();
+    
+    public static void Load()
+    {
+        Addressables.LoadAssetsAsync<ModuleSet>(typeof(ModuleSet).Name, op =>
+        {
+            moduleSets.Add(op.moduleID,op);
+        });
+    }
+
+    public static ModuleSet Get(int id)
+    {
+        if (!moduleSets.ContainsKey(id))
+        {
+            return null;
+        }
+        return moduleSets[id];
+    }
 }

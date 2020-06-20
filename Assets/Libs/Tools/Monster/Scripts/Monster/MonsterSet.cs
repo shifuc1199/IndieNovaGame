@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Sirenix.OdinInspector;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 
 namespace Tools.Monster
@@ -43,6 +44,26 @@ namespace Tools.Monster
         /// </summary>
         [TextArea]
         public string monsterDetail;
+        
+        private static Dictionary<int,MonsterSet> moduleSets= new Dictionary<int, MonsterSet>();
+    
+        public static void Load()
+        {
+            Addressables.LoadAssetsAsync<MonsterSet>(typeof(MonsterSet).Name, op =>
+            {
+                moduleSets.Add(op.monsterID,op);
+               
+            });
+        }
+
+        public static MonsterSet Get(int id)
+        {
+            if (!moduleSets.ContainsKey(id))
+            {
+                return null;
+            }
+            return moduleSets[id];
+        }
     }
     
 

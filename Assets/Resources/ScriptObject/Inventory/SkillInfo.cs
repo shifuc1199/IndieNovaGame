@@ -16,6 +16,8 @@ public class SkillInfo
     {
         skillSet = set;
     }
+
+    public int countInSkillPool = 0;
     /// <summary>
     /// 技能预设引用
     /// </summary>

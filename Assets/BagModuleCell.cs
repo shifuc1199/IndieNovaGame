@@ -4,32 +4,41 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BagModuleCell : ModuleCell 
+public class BagModuleCell : ModelCell<ModuleInfo,MonsterInfo>
 {
+ 
+    private bool isEquipable;
     
-    private void Awake()
+    public Text infoText;
+
+    public override void SetModel(ModuleInfo model,MonsterInfo monsterInfo)
     {
-        GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.EquipModule,UpdateEquipable);
+        base.SetModel(model,monsterInfo);
+        infoText.text = model.moduleSet.moduleName + ": LV " + model.moduleLevel;
+        SetEquipable(commonModel.ModuleEquipable(model));
     }
 
-    private void OnDestroy()
+    public override void UpdateCommonModel(MonsterInfo commonModel)
     {
-        GloablManager.Instance.EventManager.RemoveListener<ModuleInfo>(EventTypeArg.EquipModule,UpdateEquipable);
+        base.UpdateCommonModel(commonModel);
+        SetEquipable(commonModel.ModuleEquipable(model));
     }
 
-    public void Equip()
+    public override void Refresh()
     {
-        GloablManager.Instance.PlayerInfo.currentMonster.EquipModule(moduleInfo);
+        SetEquipable(commonModel.ModuleEquipable(model));
     }
-    public override void SetModel(ModuleInfo info)
+
+    public void SetEquipable(bool value)
     {
-        base.SetModel(info);
-        UpdateEquipable();
-    }
-    public void UpdateEquipable(ModuleInfo info=null)
-    {
-        var isEquipable = GloablManager.Instance.PlayerInfo.currentMonster.ModuleEquipable(moduleInfo);
+        isEquipable = value;
         GetComponent<Button>().interactable = isEquipable;
     }
- 
+    public void Equip()
+    {
+        commonModel.EquipModule(model);
+        
+    }
+
+   
 }

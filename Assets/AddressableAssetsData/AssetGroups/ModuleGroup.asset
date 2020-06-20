@@ -22,11 +22,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Modules
+    - ModuleSet
   - m_GUID: 6961253ed4fea5243915f5de8a8b5be5
     m_Address: "\u521D\u59CB\u666E\u901A\u6A21\u5757"
     m_ReadOnly: 0
     m_SerializedLabels:
     - Modules
+    - ModuleSet
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: aae1027fd17855448970a8e01075c5db, type: 2}
   m_SchemaSet:

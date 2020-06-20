@@ -109,7 +109,7 @@ MonoBehaviour:
   moduleName: "\u521D\u59CB\u79CD\u65CF\u6A21\u5757"
   moduleIconA: {fileID: 0}
   moduleIconB: {fileID: 0}
-  moduleID: 0
+  moduleID: 1
   moduleTypeField: 0
   LevelEXP: 64000000c80000002c010000
   moduleDetail: 

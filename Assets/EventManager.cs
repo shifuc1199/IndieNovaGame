@@ -10,7 +10,7 @@ public enum EventTypeArg
     EquipModule,
     AddSkill,
     EquipSkill,
-    EquipModuleLevelUp
+    LevelNowChange,
 }
 
 public class EventManager

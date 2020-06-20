@@ -5,20 +5,18 @@ using DreamerTool.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillCell : MonoBehaviour
+public class SkillCell : ModelCell<SkillInfo,MonsterInfo>
 {
-   private SkillInfo _skillInfo;
    public Text contentText;
-   public void SetModel(SkillInfo skillInfo)
+   public override void SetModel(SkillInfo model, MonsterInfo commonModel)
    {
-      _skillInfo = skillInfo;
-      
-      contentText.text = skillInfo.skillSet.skillName;
+      base.SetModel(model, commonModel);
+      contentText.text = model.skillSet.skillName;
    }
 
    public void Equip()
    {
-      GloablManager.Instance.PlayerInfo.currentMonster.EquipSkill(_skillInfo);
+      commonModel.EquipSkill(model);
       GetComponent<Image>().color = Color.green;
    }
 }

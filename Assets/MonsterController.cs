@@ -20,20 +20,17 @@ public class MonsterController : MonoBehaviour
     
     private MonsterInfo _monsterInfo;
     public MonsterControlInput mosterControlInput { get; private set; }
-    public AssetReference monsterSet;
+     
     // Start is called before the first frame update
     void Awake()
     {
         _rigi2D = GetComponent<Rigidbody2D>();
         mosterControlInput = new MonsterControlInput();
         mosterControlInput.MonsterControll.Jump.performed += callBack=>Jump();
-        
-        monsterSet.LoadAssetAsync<MonsterSet>().Completed += op =>
-        {
-            _monsterInfo = new MonsterInfo(op.Result);
-            SetMonster(_monsterInfo);
-        };
+     
     }
+
+    
 
     private void OnEnable()
     {
@@ -46,6 +43,7 @@ public class MonsterController : MonoBehaviour
     }
     public void SetMonster(MonsterInfo monsterInfo)
     {
+        _monsterInfo = monsterInfo;
         GloablManager.Instance.PlayerInfo.currentMonster = monsterInfo;
     }
     public void Move(float moveDir)
@@ -80,15 +78,25 @@ public class MonsterController : MonoBehaviour
     {
         _rigi2D.velocity = new Vector2(_rigi2D.velocity.x, jumpSpeed);
     }
+
+    void test()
+    {
+        if (_monsterInfo == null)
+        {
+            var set = MonsterSet.Get(1);
+            if(set!=null)
+                SetMonster(new MonsterInfo(set));
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        test();
         if (_monsterInfo!=null)
         {
             foreach (var equipSkill in _monsterInfo.monSkillPool)
             {
-                equipSkill.skillSet.OnUpdate(this);
+                equipSkill.Value.skillSet.OnUpdate(this);
             }
         }
         moveInput = mosterControlInput.MonsterControll.Move.ReadValue<Vector2>();

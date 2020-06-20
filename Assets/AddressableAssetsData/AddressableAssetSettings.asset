@@ -63,8 +63,8 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - Modules
     - MonsterSet
+    - ModuleSet
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6e742fa4a4037c24b9ad2b4809cd5a3b, type: 2}

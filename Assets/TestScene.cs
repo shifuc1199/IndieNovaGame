@@ -6,15 +6,15 @@ using UnityEngine.AddressableAssets;
 
 public class TestScene : MonoBehaviour
 {
-   public AssetReference asset;
-   public void AddBag()
+ 
+   private void Awake()
    {
-      asset.LoadAssetAsync<ModuleSet>().Completed += op =>
-      {
-         var module = new ModuleInfo(op.Result,30);
-         GloablManager.Instance.PlayerInfo.AddBagModule(module);
-     
-      };
-    
+      GloablManager.Instance.GameInit();
+   }
+
+   public void AddBag(int id)
+   {
+     var module = new ModuleInfo(ModuleSet.Get(id),1);
+     GloablManager.Instance.PlayerInfo.AddBagModule(module);
    }
 }
