@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using Tools.Monster;
 using UnityEngine;
@@ -64,12 +65,12 @@ public class ModuleSet : SerializedScriptableObject
     
     private static Dictionary<int,ModuleSet> moduleSets= new Dictionary<int, ModuleSet>();
     
-    public static void Load()
+    public static async Task Load()
     {
-        Addressables.LoadAssetsAsync<ModuleSet>(typeof(ModuleSet).Name, op =>
+        await Addressables.LoadAssetsAsync<ModuleSet>(typeof(ModuleSet).Name, op =>
         {
             moduleSets.Add(op.moduleID,op);
-        });
+        }).Task;
     }
 
     public static ModuleSet Get(int id)

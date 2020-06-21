@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tools.Monster;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 public class AssetsManager  
 {
-    public void Load()
+    public async Task Load()
     {
-        ModuleSet.Load();
-        MonsterSet.Load();
+      await ModuleSet.Load();
+      await MonsterSet.Load();
+         
     }
  
 }

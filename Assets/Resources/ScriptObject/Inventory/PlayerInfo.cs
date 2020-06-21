@@ -17,7 +17,7 @@ public class PlayerInfo
     /// <summary>
     /// 玩家当前的怪物队伍列表
     /// </summary>
-    public List<MonsterInfo> playerMonsterTeamList;
+    public List<MonsterInfo> playerMonsterTeamList = new List<MonsterInfo>();
     /// <summary>
     /// 玩家当前的物品列表
     /// </summary>
@@ -40,7 +40,10 @@ public class PlayerInfo
     /// </summary>
     public Vector3 playerPostion;
 
- 
+    public void AddMonster(MonsterInfo monsterInfo)
+    {
+        playerMonsterTeamList.Add(monsterInfo);
+    }
     public void AddBagModule(ModuleInfo module)
     {
         playerPubModuleList.Add(module);

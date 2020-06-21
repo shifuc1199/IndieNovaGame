@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class MonsterInfoView : MonoBehaviour
+using DreamerTool.UI;
+public class MonsterInfoView : View
 {  
     private MonsterInfo _monsterInfo;
     public SkillPool skillPool;

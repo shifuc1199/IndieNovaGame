@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ee41b05cf9d73d4a9857368849721d8, type: 3}
-  m_Name: "\u738B\u5929\u6865"
+  m_Name: "\u5E08\u9E3F\u535A"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -25,8 +25,8 @@ MonoBehaviour:
       Entry: 6
       Data: 
   monsterIcon: {fileID: 0}
-  monsterSpecificName: M2
-  monsterID: 1
+  monsterSpecificName: M1
+  monsterID: 2
   monsterSpecificLevel: 15
   birthModule: {fileID: 11400000, guid: 974fc062205e5d74ca472f44563d289d, type: 2}
   monsterDetail: a

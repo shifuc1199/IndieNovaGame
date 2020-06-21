@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tools.Monster;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-
-public class TestScene : MonoBehaviour
+using DreamerTool.UI;
+public class TestScene : Scene
 {
- 
-   private void Awake()
+    public GameObject controller;
+   private async void Awake()
    {
-      GloablManager.Instance.GameInit();
+       base.Awake();
+      await GloablManager.Instance.GameInit();
+      controller.SetActive(true);
+      GloablManager.Instance.PlayerInfo.AddMonster(new MonsterInfo(MonsterSet.Get(1)));
+      GloablManager.Instance.PlayerInfo.AddMonster(new MonsterInfo(MonsterSet.Get(2)));
    }
 
    public void AddBag(int id)

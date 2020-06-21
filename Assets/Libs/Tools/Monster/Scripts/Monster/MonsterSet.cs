@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
@@ -47,13 +48,13 @@ namespace Tools.Monster
         
         private static Dictionary<int,MonsterSet> moduleSets= new Dictionary<int, MonsterSet>();
     
-        public static void Load()
+        public static async Task  Load()
         {
-            Addressables.LoadAssetsAsync<MonsterSet>(typeof(MonsterSet).Name, op =>
+           await Addressables.LoadAssetsAsync<MonsterSet>(typeof(MonsterSet).Name, op =>
             {
                 moduleSets.Add(op.monsterID,op);
                
-            });
+            }).Task;
         }
 
         public static MonsterSet Get(int id)
