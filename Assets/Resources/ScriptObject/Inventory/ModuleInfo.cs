@@ -41,11 +41,10 @@ public class ModuleInfo
 
         foreach (var skill in unlockSkill)
         {
-            
-             
             ownerMonster.RemoveSkillPool(skill);
             lockSkill.Add(skill);
         }
+        unlockSkill.Clear();
         lockSkill.Sort((info, skillInfo) => { return moduleSet.moduleSkills[skillInfo.skillSet].CompareTo(moduleSet.moduleSkills[info.skillSet]);});
         ownerMonster = null;
          

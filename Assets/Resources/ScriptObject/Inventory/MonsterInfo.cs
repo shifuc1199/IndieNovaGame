@@ -60,7 +60,7 @@ public class MonsterInfo
     /// <summary>
     /// 生效的技能列表
     /// </summary>
-    public List<SkillInfo> monEquipSkill = new List<SkillInfo>();
+    public Dictionary<int,SkillInfo> monEquipSkill = new Dictionary<int,SkillInfo>();
 
     public void ChageLevelNow(int value)
     {
@@ -120,24 +120,30 @@ public class MonsterInfo
     }
     public void RemoveSkillPool(SkillInfo skillInfo)
     {
-        skillInfo.countInSkillPool--;
-        if (skillInfo.countInSkillPool == 0)
+        var skillId = skillInfo.skillSet.skillID;
+        var skill = monSkillPool[skillId];
+        skill.countInSkillPool--;
+      
+        if (skill.countInSkillPool == 0)
         {
-            monSkillPool.Remove(skillInfo.skillSet.skillID);
-            if(monEquipSkill.Contains(skillInfo))
+            monSkillPool.Remove(skillId);
+            
+            if(monEquipSkill.ContainsKey(skillId))
                 UnEquipSkil(skillInfo);
+            
             GloablManager.Instance.EventManager.BroadCast(EventTypeArg.RemoveSkill,skillInfo);
         }
  
     }
     public void AddSkillPool(SkillInfo skillInfo)
     {
-        skillInfo.countInSkillPool++;
         if (monSkillPool.ContainsKey(skillInfo.skillSet.skillID))
-        { 
+        {
+            monSkillPool[skillInfo.skillSet.skillID].countInSkillPool++;
             return;
         }
 
+        skillInfo.countInSkillPool++;
         monSkillPool.Add(skillInfo.skillSet.skillID,skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.AddSkill,skillInfo);
     }
@@ -145,13 +151,13 @@ public class MonsterInfo
     public void UnEquipSkil(SkillInfo skillInfo)
     {
         skillInfo.skillSet.OnUnEquip(this);
-        monEquipSkill.Remove(skillInfo);
+        monEquipSkill.Remove(skillInfo.skillSet.skillID);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.UnEquipSkill,skillInfo);
     }
     public void EquipSkill(SkillInfo skillInfo)
     {
         skillInfo.skillSet.OnEquip(this);
-        monEquipSkill.Add(skillInfo);
+        monEquipSkill.Add(skillInfo.skillSet.skillID,skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipSkill,skillInfo);
     }
 
