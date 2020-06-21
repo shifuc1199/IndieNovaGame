@@ -14,6 +14,20 @@ public class MonsterInfoView : MonoBehaviour
     private void Awake()
     {
         SetModel(GloablManager.Instance.PlayerInfo.currentMonster);
+        GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.RemoveSkill,skillInfo=>
+        {
+            skillPool.RemovelCell(skillInfo);
+        });
+        GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.UnEquipSkill,skillInfo=>
+        {
+            skillEquip.RemovelCell(skillInfo);
+             
+        });
+        GloablManager.Instance.EventManager.AddListener<ModuleInfo>(EventTypeArg.UnEquipModule,moduleinfo=>
+        {
+            moduleBag.AddCell(moduleinfo,_monsterInfo);
+            moduleEquip.RemovelCell(moduleinfo);
+        });
         GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.EquipSkill,skillinfo=>
         {
             skillEquip.AddCell(skillinfo,_monsterInfo);

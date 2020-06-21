@@ -9,8 +9,11 @@ public enum EventTypeArg
     AddBagModule,
     EquipModule,
     AddSkill,
+    RemoveSkill,
     EquipSkill,
+    UnEquipSkill,
     LevelNowChange,
+    UnEquipModule
 }
 
 public class EventManager

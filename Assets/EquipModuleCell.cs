@@ -22,6 +22,10 @@ public class EquipModuleCell : ModelCell<ModuleInfo>
         Refresh();
     }
 
+    public void UnEquip()
+    {
+        model.ownerMonster.UnEquipModule(model);
+    }
     public override void Refresh()
     {
         infoText.text = model.moduleSet.moduleName + ": LV " + model.moduleLevel;

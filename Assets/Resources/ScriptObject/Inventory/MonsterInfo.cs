@@ -91,6 +91,10 @@ public class MonsterInfo
     }
     public bool ModuleEquipable(ModuleInfo moduleInfo)
     {
+        if (monEquipModules.ContainsKey(moduleInfo.moduleSet.moduleID))
+        {
+            return false;
+        }
         switch (moduleInfo.moduleSet.moduleTypeField)
         {
             case ModuleSet.moduleType.种族模块:
@@ -114,6 +118,18 @@ public class MonsterInfo
             monsterRealimeField[realTimeField] = value;
         }
     }
+    public void RemoveSkillPool(SkillInfo skillInfo)
+    {
+        skillInfo.countInSkillPool--;
+        if (skillInfo.countInSkillPool == 0)
+        {
+            monSkillPool.Remove(skillInfo.skillSet.skillID);
+            if(monEquipSkill.Contains(skillInfo))
+                UnEquipSkil(skillInfo);
+            GloablManager.Instance.EventManager.BroadCast(EventTypeArg.RemoveSkill,skillInfo);
+        }
+ 
+    }
     public void AddSkillPool(SkillInfo skillInfo)
     {
         skillInfo.countInSkillPool++;
@@ -125,15 +141,39 @@ public class MonsterInfo
         monSkillPool.Add(skillInfo.skillSet.skillID,skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.AddSkill,skillInfo);
     }
+
+    public void UnEquipSkil(SkillInfo skillInfo)
+    {
+        skillInfo.skillSet.OnUnEquip(this);
+        monEquipSkill.Remove(skillInfo);
+        GloablManager.Instance.EventManager.BroadCast(EventTypeArg.UnEquipSkill,skillInfo);
+    }
     public void EquipSkill(SkillInfo skillInfo)
     {
         skillInfo.skillSet.OnEquip(this);
         monEquipSkill.Add(skillInfo);
         GloablManager.Instance.EventManager.BroadCast(EventTypeArg.EquipSkill,skillInfo);
     }
- 
+
+    public void UnEquipModule(ModuleInfo moduleInfo)
+    {
+        
+        monEquipModules.Remove(moduleInfo.moduleSet.moduleID);
+         
+        if ( moduleInfo.moduleSet.moduleTypeField == ModuleSet.moduleType.扩展模块)
+        {
+            containerLevel -= moduleInfo.moduleLevel;
+        }
+        
+        ChageLevelNow(-moduleInfo.moduleLevel);
+
+        moduleInfo.UnEquiped();
+        
+        GloablManager.Instance.EventManager.BroadCast(EventTypeArg.UnEquipModule,moduleInfo);
+    }
     public void EquipModule(ModuleInfo moduleInfo)
     {
+ 
         moduleInfo.Equiped(this);
         
         monEquipModules.Add(moduleInfo.moduleSet.moduleID,moduleInfo);

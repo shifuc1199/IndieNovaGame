@@ -35,6 +35,21 @@ public class ModuleInfo
     {
         ownerMonster = monsterInfo;
     }
+    public void UnEquiped()
+    {
+        moduleLevel = 1;
+
+        foreach (var skill in unlockSkill)
+        {
+            
+             
+            ownerMonster.RemoveSkillPool(skill);
+            lockSkill.Add(skill);
+        }
+        lockSkill.Sort((info, skillInfo) => { return moduleSet.moduleSkills[skillInfo.skillSet].CompareTo(moduleSet.moduleSkills[info.skillSet]);});
+        ownerMonster = null;
+         
+    }
     public void LevelUp()
     {
         moduleLevel += 1;
