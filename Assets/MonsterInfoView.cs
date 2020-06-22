@@ -14,7 +14,7 @@ public class MonsterInfoView : View
     // Start is called before the first frame update
     private void Awake()
     {
-        SetModel(GloablManager.Instance.PlayerInfo.currentMonster);
+        
         GloablManager.Instance.EventManager.AddListener<SkillInfo>(EventTypeArg.RemoveSkill,skillInfo=>
         {
             skillPool.RemovelCell(skillInfo);
@@ -61,6 +61,8 @@ public class MonsterInfoView : View
     public void SetModel(MonsterInfo monster)
     {
         _monsterInfo = monster;
+        skillEquip.SetMonster(monster);
+        skillPool.SetMonster(monster);
         moduleEquip.SetMonster(monster);
         moduleBag.SetMonster(monster);
         UpdateMonsterLevelText();

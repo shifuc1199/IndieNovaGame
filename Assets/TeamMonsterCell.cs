@@ -15,7 +15,7 @@ public class TeamMonsterCell : ModelCell<MonsterInfo>
     
     public void SelectModel()
     {
-        
+        Debug.Log("Select: "+model.monsterSet.monsterSpecificName);
         View.CurrentScene.GetView<MonsterInfoView>().SetModel(model);
     }
 

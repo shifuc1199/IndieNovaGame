@@ -13,8 +13,11 @@ public class TestScene : Scene
        base.Awake();
       await GloablManager.Instance.GameInit();
       controller.SetActive(true);
-      GloablManager.Instance.PlayerInfo.AddMonster(new MonsterInfo(MonsterSet.Get(1)));
-      GloablManager.Instance.PlayerInfo.AddMonster(new MonsterInfo(MonsterSet.Get(2)));
+      var monster_1 = new MonsterInfo(MonsterSet.Get(1));
+      var monster_2 = new MonsterInfo(MonsterSet.Get(2));
+      GloablManager.Instance.PlayerInfo.AddMonster(monster_1);
+      GloablManager.Instance.PlayerInfo.AddMonster(monster_2);
+      View.CurrentScene.GetView<MonsterInfoView>().SetModel(monster_1);
    }
 
    public void AddBag(int id)
