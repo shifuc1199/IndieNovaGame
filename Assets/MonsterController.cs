@@ -19,28 +19,19 @@ public class MonsterController : MonoBehaviour
     public bool isGround = false;
     
     private MonsterInfo _monsterInfo;
-    public MonsterControlInput mosterControlInput { get; private set; }
+    
      
     // Start is called before the first frame update
     void Awake()
     {
         _rigi2D = GetComponent<Rigidbody2D>();
-        mosterControlInput = new MonsterControlInput();
-        mosterControlInput.MonsterControll.Jump.performed += callBack=>Jump();
+         
+        GloablManager.Instance.GameInput.MonsterControll.Jump.performed += callBack=>Jump();
         SetMonster(new MonsterInfo(MonsterSet.Get(1)));
     }
 
-    
-
-    private void OnEnable()
-    {
-        mosterControlInput.Enable();
-    }
-
-    private void OnDisable()
-    {
-        mosterControlInput.Disable();
-    }
+ 
+ 
     public void SetMonster(MonsterInfo monsterInfo)
     {
         _monsterInfo = monsterInfo;
@@ -90,7 +81,7 @@ public class MonsterController : MonoBehaviour
                 equipSkill.Value.skillSet.OnUpdate(this);
             }
         }
-        moveInput = mosterControlInput.MonsterControll.Move.ReadValue<Vector2>();
+        moveInput = GloablManager.Instance.GameInput.MonsterControll.Move.ReadValue<Vector2>();
         isGround = Physics2D.OverlapCircle(GroundCheck.position,0.1f,LayerMask.GetMask(DOWNABLE_PLATFORM_LAYER)|LayerMask.GetMask("Ground")) && _rigi2D.velocity.y == 0;
     }
 

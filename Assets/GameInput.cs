@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/MonsterControlInput.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/GameInput.inputactions'
 
 using System;
 using System.Collections;
@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @MonsterControlInput : IInputActionCollection, IDisposable
+public class @GameInput : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @MonsterControlInput()
+    public @GameInput()
     {
         asset = InputActionAsset.FromJson(@"{
-    ""name"": ""MonsterControlInput"",
+    ""name"": ""GameInput"",
     ""maps"": [
         {
             ""name"": ""MonsterControll"",
@@ -174,8 +174,8 @@ public class @MonsterControlInput : IInputActionCollection, IDisposable
     private readonly InputAction m_MonsterControll_Climb;
     public struct MonsterControllActions
     {
-        private @MonsterControlInput m_Wrapper;
-        public MonsterControllActions(@MonsterControlInput wrapper) { m_Wrapper = wrapper; }
+        private @GameInput m_Wrapper;
+        public MonsterControllActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_MonsterControll_Move;
         public InputAction @Jump => m_Wrapper.m_MonsterControll_Jump;
         public InputAction @Climb => m_Wrapper.m_MonsterControll_Climb;

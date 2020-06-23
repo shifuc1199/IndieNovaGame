@@ -26,7 +26,7 @@ public class JumpSkillExcute : SkillExecute
             jumpIndex = 0;
         }
 
-        if (controller.mosterControlInput.MonsterControll.Jump.triggered)
+        if (GloablManager.Instance.GameInput.MonsterControll.Jump.triggered)
         { 
             
             if(jumpIndex>=maxJumpCount)
