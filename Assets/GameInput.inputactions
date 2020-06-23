@@ -1,5 +1,5 @@
 {
-    "name": "MonsterControlInput",
+    "name": "GameInput",
     "maps": [
         {
             "name": "MonsterControll",
@@ -96,6 +96,33 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Common",
+            "id": "317ba88a-990c-415f-affb-e069acf328a8",
+            "actions": [
+                {
+                    "name": "Inactive",
+                    "type": "Button",
+                    "id": "403a0cde-d74e-48f7-ab2a-4f89c44c19dc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8ad234cf-caf6-48cb-b28d-a187464ad9df",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inactive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

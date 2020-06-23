@@ -7,6 +7,11 @@ public abstract class DialogueNodeBase : Node
 {
 	public abstract bool Execute();
 
+	public virtual void Reset()
+	{
+		 
+	}
+
 	public virtual NodePort GetOutputPort()
 	{
 		return this.GetOutputPort("Out");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 namespace DreamerTool.Inactive
 {
     public class InactiveTrigger : MonoBehaviour
@@ -14,9 +15,23 @@ namespace DreamerTool.Inactive
 
         public virtual void OnTriggerEnter(Collider other)
         {
+            
             if (other.gameObject.tag != "Player")
                 return;
+           
+            if(_inactive_key_show)
+                _inactive_key_show.SetActive(true);
 
+            otherGameobject = other.gameObject;
+
+
+        }
+        public virtual void OnTriggerEnter2D(Collider2D other)
+        {
+            
+            if (other.gameObject.tag != "Player")
+                return;
+           
             if(_inactive_key_show)
                 _inactive_key_show.SetActive(true);
 
@@ -25,6 +40,16 @@ namespace DreamerTool.Inactive
 
         }
 
+        public virtual void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.gameObject.tag != "Player")
+                return;
+            
+            if (_inactive_key_show)
+                _inactive_key_show.SetActive(false);
+
+            otherGameobject = null;
+        }
         public virtual void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag != "Player")

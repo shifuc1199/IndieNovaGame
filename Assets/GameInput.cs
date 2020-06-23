@@ -111,6 +111,33 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Common"",
+            ""id"": ""317ba88a-990c-415f-affb-e069acf328a8"",
+            ""actions"": [
+                {
+                    ""name"": ""Inactive"",
+                    ""type"": ""Button"",
+                    ""id"": ""403a0cde-d74e-48f7-ab2a-4f89c44c19dc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8ad234cf-caf6-48cb-b28d-a187464ad9df"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inactive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,6 +147,9 @@ public class @GameInput : IInputActionCollection, IDisposable
         m_MonsterControll_Move = m_MonsterControll.FindAction("Move", throwIfNotFound: true);
         m_MonsterControll_Jump = m_MonsterControll.FindAction("Jump", throwIfNotFound: true);
         m_MonsterControll_Climb = m_MonsterControll.FindAction("Climb", throwIfNotFound: true);
+        // Common
+        m_Common = asset.FindActionMap("Common", throwIfNotFound: true);
+        m_Common_Inactive = m_Common.FindAction("Inactive", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,10 +244,47 @@ public class @GameInput : IInputActionCollection, IDisposable
         }
     }
     public MonsterControllActions @MonsterControll => new MonsterControllActions(this);
+
+    // Common
+    private readonly InputActionMap m_Common;
+    private ICommonActions m_CommonActionsCallbackInterface;
+    private readonly InputAction m_Common_Inactive;
+    public struct CommonActions
+    {
+        private @GameInput m_Wrapper;
+        public CommonActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inactive => m_Wrapper.m_Common_Inactive;
+        public InputActionMap Get() { return m_Wrapper.m_Common; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CommonActions set) { return set.Get(); }
+        public void SetCallbacks(ICommonActions instance)
+        {
+            if (m_Wrapper.m_CommonActionsCallbackInterface != null)
+            {
+                @Inactive.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
+                @Inactive.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
+                @Inactive.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
+            }
+            m_Wrapper.m_CommonActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Inactive.started += instance.OnInactive;
+                @Inactive.performed += instance.OnInactive;
+                @Inactive.canceled += instance.OnInactive;
+            }
+        }
+    }
+    public CommonActions @Common => new CommonActions(this);
     public interface IMonsterControllActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+    }
+    public interface ICommonActions
+    {
+        void OnInactive(InputAction.CallbackContext context);
     }
 }

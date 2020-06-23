@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 using DreamerTool.UI;
 public class TestScene : Scene
 {
-    public DialogueGraph graph;
+    private DialogueGraph dialogueGraph;
    public GameObject controller;
    private async void Awake()
    {
@@ -21,9 +21,23 @@ public class TestScene : Scene
       View.CurrentScene.GetView<MonsterInfoView>().SetModel(monster_1);
    }
 
+   public void PlayDialogueGraph(DialogueGraph graph)
+   {
+       this.dialogueGraph = graph;
+       graph.Reset();
+       
+   }
+
    private void Update()
    {
-       graph.Execute();
+       if (dialogueGraph != null)
+       {
+           dialogueGraph.Execute();
+           if (dialogueGraph.state == RunningState.Stop)
+           {
+               dialogueGraph = null;
+           }
+       }
    }
 
    public void AddBag(int id)

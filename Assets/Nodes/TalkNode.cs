@@ -24,9 +24,8 @@ public class TalkNode : DialogueNodeBase
 	private bool isExcute;
  
 
-	private  void OnEnable()
+	public override void Reset()
 	{
-		base.OnEnable();
 		isExcute = false;
 	}
 

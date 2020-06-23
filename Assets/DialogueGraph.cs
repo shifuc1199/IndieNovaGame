@@ -25,13 +25,18 @@ public class DialogueGraph : NodeGraph
 		return node;	 
 	}
 
-	private void OnEnable()
-	{
+ 
+
+	public void Reset()
+	{		
 		state = RunningState.Running;
 		_currentNode = null;
+		foreach (var node in nodes)
+		{
+			(node as DialogueNodeBase).Reset();
+		}
 	}
 
-	 
 	public void Execute()
 	{
 		 
