@@ -29,6 +29,7 @@ public class DialogueGraph : NodeGraph
 
 	public void Reset()
 	{		
+		 
 		state = RunningState.Running;
 		_currentNode = null;
 		foreach (var node in nodes)

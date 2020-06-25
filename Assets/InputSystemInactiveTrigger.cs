@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using DreamerTool.Inactive;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputSystemInactiveTrigger : InactiveTrigger
 {
-    private void Awake()
+    private void OnEnable()
     {
-        GloablManager.Instance.GameInput.Common.Inactive.performed += callback=> Inactive();
+        GloablManager.Instance.GameInput.Common.Inactive.performed +=   Inactive;
+    }
+    private void OnDisable()
+    {
+        GloablManager.Instance.GameInput.Common.Inactive.performed -= Inactive;
     }
 
-    public void Inactive()
+    public void Inactive(InputAction.CallbackContext callback)
     {
         if (_inactive_event != null && otherGameobject!=null)
         {   

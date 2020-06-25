@@ -123,6 +123,14 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Talk"",
+                    ""type"": ""Button"",
+                    ""id"": ""54541694-6ff5-40ac-b8a6-da6855911511"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -134,6 +142,17 @@ public class @GameInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inactive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1e1684d-1851-4ecf-aca7-743fe596dd3e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Talk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -150,6 +169,7 @@ public class @GameInput : IInputActionCollection, IDisposable
         // Common
         m_Common = asset.FindActionMap("Common", throwIfNotFound: true);
         m_Common_Inactive = m_Common.FindAction("Inactive", throwIfNotFound: true);
+        m_Common_Talk = m_Common.FindAction("Talk", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,11 +269,13 @@ public class @GameInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Common;
     private ICommonActions m_CommonActionsCallbackInterface;
     private readonly InputAction m_Common_Inactive;
+    private readonly InputAction m_Common_Talk;
     public struct CommonActions
     {
         private @GameInput m_Wrapper;
         public CommonActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inactive => m_Wrapper.m_Common_Inactive;
+        public InputAction @Talk => m_Wrapper.m_Common_Talk;
         public InputActionMap Get() { return m_Wrapper.m_Common; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +288,9 @@ public class @GameInput : IInputActionCollection, IDisposable
                 @Inactive.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
                 @Inactive.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
                 @Inactive.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnInactive;
+                @Talk.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnTalk;
+                @Talk.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnTalk;
+                @Talk.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnTalk;
             }
             m_Wrapper.m_CommonActionsCallbackInterface = instance;
             if (instance != null)
@@ -273,6 +298,9 @@ public class @GameInput : IInputActionCollection, IDisposable
                 @Inactive.started += instance.OnInactive;
                 @Inactive.performed += instance.OnInactive;
                 @Inactive.canceled += instance.OnInactive;
+                @Talk.started += instance.OnTalk;
+                @Talk.performed += instance.OnTalk;
+                @Talk.canceled += instance.OnTalk;
             }
         }
     }
@@ -286,5 +314,6 @@ public class @GameInput : IInputActionCollection, IDisposable
     public interface ICommonActions
     {
         void OnInactive(InputAction.CallbackContext context);
+        void OnTalk(InputAction.CallbackContext context);
     }
 }

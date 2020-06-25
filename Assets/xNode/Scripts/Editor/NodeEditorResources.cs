@@ -32,9 +32,10 @@ namespace XNodeEditor {
                 nodeHeader.alignment = TextAnchor.MiddleCenter;
                 nodeHeader.fontStyle = FontStyle.Bold;
                 nodeHeader.normal.textColor = Color.white;
-
+            
                 nodeBody = new GUIStyle();
                 nodeBody.normal.background = NodeEditorResources.nodeBody;
+                
                 nodeBody.border = new RectOffset(32, 32, 32, 32);
                 nodeBody.padding = new RectOffset(16, 16, 4, 16);
 

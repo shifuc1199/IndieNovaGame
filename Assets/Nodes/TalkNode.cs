@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 using DreamerTool.UI;
-using UnityEngine.InputSystem;
+ 
 [System.Serializable]
 public class Talker
 {
@@ -12,13 +12,14 @@ public class Talker
 	public Sprite talkerHead;
 	public string talkerName;
 }
- 
+ [NodeTint("#22BCE5")]
+ [NodeWidth(300)]
 public class TalkNode : DialogueNodeBase
-{
+{ 
 	[Input(ShowBackingValue.Never)]public byte In;
 	public Talker talker;
-	[TextArea]
-    public string content;
+	
+    public List<string> content = new List<string>();
     [Output]public byte Out;
     
 	private bool isExcute;
@@ -28,7 +29,7 @@ public class TalkNode : DialogueNodeBase
 	{
 		isExcute = false;
 	}
-
+	
 	public override bool Execute()
 	{
 		var talkView = View.CurrentScene.OpenView<TalkView>();
@@ -37,19 +38,7 @@ public class TalkNode : DialogueNodeBase
 			isExcute = true;
 			talkView.SetModel(talker, content);
 		}
-
-		if (Keyboard.current.spaceKey.wasPressedThisFrame)
-		{
-			if (!talkView.IsTalkOver())
-			{
-				talkView.TalkOver();
-				return false;
-			}
-			 
-			return true;
-		}
-
-		return false;
+		return talkView.IsTalkOver();
 	}
  
 	// Return the correct value of an output port when requested
