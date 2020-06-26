@@ -67,7 +67,7 @@ public class TalkNodeEdtior : NodeEditor
             for (int i = 0; i < node.content.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                node.content[i] = EditorGUILayout.TextArea(node.content[i], GUILayout.Height(50),GUILayout.Width(245));
+                node.content[i] = EditorGUILayout.TextArea(node.content[i], GUILayout.Height(50),GUILayout.Width(245 ));
                 if (GUILayout.Button("-", GUILayout.Width(20), GUILayout.Height(50)))
                 {
                     removeIndex = i;

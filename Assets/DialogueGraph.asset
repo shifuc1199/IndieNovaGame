@@ -1,5 +1,135 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8472951465277320163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844548014bc277941898881dc7911cb9, type: 3}
+  m_Name: Talk
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 329.5117, y: -482.6203}
+  ports:
+    keys:
+    - In
+    - Out
+    values:
+    - _fieldName: In
+      _node: {fileID: -8472951465277320163}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Choices 0
+        node: {fileID: -6645762211042788554}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Out
+      _node: {fileID: -8472951465277320163}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: In
+        node: {fileID: -5794715703117405301}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  In: 0
+  talker:
+    talkerHead: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
+    talkerName: "\u5E08\u9E3F\u535A"
+  content:
+  - "\u5F88\u68D2 \u4F60\u9009\u62E9\u7684\u5F88\u6B63\u786E"
+  Out: 0
+--- !u!114 &-6645762211042788554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62683a69709c3c54e9af52d50d6c88ba, type: 3}
+  m_Name: Talk Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -184, y: -408}
+  ports:
+    keys:
+    - In
+    - Choices 0
+    - Choices 1
+    - Choices 2
+    - Choices 3
+    values:
+    - _fieldName: In
+      _node: {fileID: -6645762211042788554}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Out
+        node: {fileID: 6017274788962675296}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Choices 0
+      _node: {fileID: -6645762211042788554}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: In
+        node: {fileID: -8472951465277320163}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Choices 1
+      _node: {fileID: -6645762211042788554}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Choices 2
+      _node: {fileID: -6645762211042788554}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Choices 3
+      _node: {fileID: -6645762211042788554}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  In: 0
+  content: "\u9009\u62E9\u5427"
+  Choices:
+  - content: 1
+  - content: 2
+  - content: 3
+  - content: 4
 --- !u!114 &-5794715703117405301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +143,7 @@ MonoBehaviour:
   m_Name: Event
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 584, y: -408}
+  position: {x: 1080, y: -168}
   ports:
     keys:
     - In
@@ -25,7 +155,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Out
-        node: {fileID: -1425180597985670642}
+        node: {fileID: -8472951465277320163}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -56,56 +186,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Out: 0
---- !u!114 &-1425180597985670642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844548014bc277941898881dc7911cb9, type: 3}
-  m_Name: Talk
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 152, y: -200}
-  ports:
-    keys:
-    - In
-    - Out
-    values:
-    - _fieldName: In
-      _node: {fileID: -1425180597985670642}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: Out
-        node: {fileID: 2095574342911213832}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Out
-      _node: {fileID: -1425180597985670642}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: In
-        node: {fileID: -5794715703117405301}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  In: 0
-  talker:
-    talkerHead: {fileID: 21300000, guid: 44a054df1702e39458b7072b08d0f212, type: 3}
-    talkerName: "\u738B\u5929\u6865"
-  content:
-  - 
-  Out: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,61 +200,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 6017274788962675296}
-  - {fileID: 2095574342911213832}
   - {fileID: -5794715703117405301}
-  - {fileID: -1425180597985670642}
-  state: 1
+  - {fileID: -6645762211042788554}
+  - {fileID: -8472951465277320163}
+  state: 0
   _entryNode: {fileID: 6017274788962675296}
---- !u!114 &2095574342911213832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844548014bc277941898881dc7911cb9, type: 3}
-  m_Name: Talk
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -184, y: -200}
-  ports:
-    keys:
-    - In
-    - Out
-    values:
-    - _fieldName: In
-      _node: {fileID: 2095574342911213832}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: Out
-        node: {fileID: 6017274788962675296}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Out
-      _node: {fileID: 2095574342911213832}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: In
-        node: {fileID: -1425180597985670642}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  In: 0
-  talker:
-    talkerHead: {fileID: 21300000, guid: f54a97d483847894c8a1a9a3678d4d2e, type: 3}
-    talkerName: "\u5E08\u9E3F\u535A"
-  content:
-  - 11111111111111111111111111111111111111111111111111111111111111111
-  Out: 0
 --- !u!114 &6017274788962675296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +229,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: In
-        node: {fileID: 2095574342911213832}
+        node: {fileID: -6645762211042788554}
         reroutePoints: []
       _direction: 1
       _connectionType: 0

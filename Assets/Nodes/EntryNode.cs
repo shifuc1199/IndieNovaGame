@@ -12,6 +12,16 @@ public abstract class DialogueNodeBase : Node
 		 
 	}
 
+	public virtual void OnEnter()
+	{
+		
+	}
+
+	public virtual void OnExit()
+	{
+		
+	}
+	
 	public virtual NodePort GetOutputPort()
 	{
 		return this.GetOutputPort("Out");
@@ -26,7 +36,7 @@ public class EntryNode : DialogueNodeBase
 		return null; // Replace this
 	}
 
- 
+	
 
 	public override bool Execute()
 	{

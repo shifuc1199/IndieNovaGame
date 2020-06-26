@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,27 +15,27 @@ public class TalkView : View
     public Image talkerImage;
     public Text talkerNameText;
     public Text contextText;
+    
     private bool istalkOver;
-    private bool isTalking = true;
+    private bool isTalking = false;
     private float talkTime=0.05f;
     private int talkIndex;
-    private List<string> talkContext = new List<string>();
-
     private int contextIndex = 0;
+    private List<string> talkContext = new List<string>();
+    private float talkTimer;
+    private StringBuilder talkSb = new StringBuilder();
+    
     public void SetModel(Talker talker,List<string> contexts)
     { 
         talkerImage.sprite = talker.talkerHead;
         talkerNameText.text = talker.talkerName;
         SetTalk(contexts);
-        
     }
-
-  
-
     public bool IsTalkOver()
     {
         return istalkOver;
     }
+
     public void TalkOver()
     {
         if (isTalking)
@@ -54,10 +55,47 @@ public class TalkView : View
             istalkOver = true;
         }
     }
-    //richIndex= 10 12 20 22 28 29 35
-    // rich = [<color=red>,<size=50>,</size>,</color>]
-//<color=red>1<size=50>2</size></color>
-//<color=red>哈</color><color=red><size=50>哈</size></color>
+    
+    #region ----------------Choice------------
+
+    private List<GameObject> choiceBtnGameObj = new List<GameObject>();
+    public Transform choiceBtnRoot;
+    public GameObject choiceBtnPrefab;
+
+    public void ClearChoice()
+    {
+        foreach (var choiceBtn in choiceBtnGameObj)
+        {
+            Destroy(choiceBtn);
+        }
+        choiceBtnGameObj.Clear();
+    }
+
+    public bool isChoice()
+    {
+        return choiceBtnGameObj.Count > 0;
+    }
+    public void SetChoice(List<TalkChoice> talkChoices,string content,Action<int> callback)
+    {
+       
+        this.contextText.text = content;
+        foreach (var talkChoice in talkChoices)
+        {
+            var btn =Instantiate(choiceBtnPrefab, choiceBtnRoot);
+            btn.GetComponent<Button>().onClick.AddListener(()=>
+            {
+                callback(btn.transform.GetSiblingIndex());
+            });
+            btn.GetComponentInChildren<Text>().text = talkChoice.content;
+            choiceBtnGameObj.Add(btn);
+        }
+    }
+
+    #endregion
+   
+    #region ----------------RichText---------------
+ 
+    Stack<string> result= new Stack<string>();
     public Stack<string> ParseStr(string str,ref int index)
     {
         Stack<string> result = new Stack<string>();
@@ -132,21 +170,22 @@ public class TalkView : View
        
 
         return result;
-
-
-
     }
-    Stack<string> result= new Stack<string>();
-    private float talkTimer;
-    private StringBuilder talkSb = new StringBuilder();
+    
+    #endregion
     private void Update()
     {
-        if (GloablManager.Instance.GameInput.Common.Talk.triggered)
+        if (!isChoice())
         {
-            TalkOver();
+            if (GloablManager.Instance.GameInput.Common.Talk.triggered)
+            {
+                TalkOver();
+            }
         }
+
         if (isTalking)
-        {
+        {       
+ 
             talkTimer += Time.deltaTime;  
             if (talkTimer >= talkTime)
             {

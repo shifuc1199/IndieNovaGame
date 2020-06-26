@@ -309,6 +309,7 @@ namespace XNodeEditor {
                 else reorderableListCache.Add(serializedObject.targetObject, new Dictionary<string, ReorderableList>() { { fieldName, list } });
             }
             list.list = dynamicPorts;
+           
             list.DoLayoutList();
         }
 
@@ -327,7 +328,10 @@ namespace XNodeEditor {
                             EditorGUI.LabelField(rect, "Array[" + index + "] data out of range");
                             return;
                         }
+
+ 
                         SerializedProperty itemData = arrayData.GetArrayElementAtIndex(index);
+                         
                         EditorGUI.PropertyField(rect, itemData, true);
                     } else EditorGUI.LabelField(rect, port != null ? port.fieldName : "");
                     if (port != null) {

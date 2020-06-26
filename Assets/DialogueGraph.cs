@@ -53,10 +53,13 @@ public class DialogueGraph : NodeGraph
 		if (_currentNode == null)
 		{
 			 
-			var entryOutput = _entryNode.GetOutputPort();
-			 
-			if(entryOutput!=null)
-				_currentNode =  entryOutput.Connection.node as DialogueNodeBase;
+			var entryOutput = _entryNode.GetOutputPort().Connection;
+
+			if (entryOutput != null)
+			{
+				_currentNode = entryOutput.node as DialogueNodeBase;
+				_currentNode.OnEnter();
+			}
 		}
 
 		if (_currentNode == null)
@@ -72,7 +75,9 @@ public class DialogueGraph : NodeGraph
 
 			if (outPut != null)
 			{
+				_currentNode.OnExit();
 				_currentNode = outPut.node as DialogueNodeBase;
+				_currentNode.OnEnter();
 			}
 			else
 			{
