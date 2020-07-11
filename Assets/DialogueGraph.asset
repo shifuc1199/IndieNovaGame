@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Talk
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 329.5117, y: -482.6203}
+  position: {x: 216, y: -552}
   ports:
     keys:
     - In
@@ -63,14 +63,12 @@ MonoBehaviour:
   m_Name: Talk Choice
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -184, y: -408}
+  position: {x: -152, y: -360}
   ports:
     keys:
     - In
     - Choices 0
     - Choices 1
-    - Choices 2
-    - Choices 3
     values:
     - _fieldName: In
       _node: {fileID: -6645762211042788554}
@@ -100,36 +98,19 @@ MonoBehaviour:
       _node: {fileID: -6645762211042788554}
       _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: Choices 2
-      _node: {fileID: -6645762211042788554}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: Choices 3
-      _node: {fileID: -6645762211042788554}
-      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: In
+        node: {fileID: 8086208015145070544}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
   In: 0
-  content: "\u9009\u62E9\u5427"
+  content: "\u4F60\u73B0\u5728\u5DF2\u7ECF\u77E5\u9053\u662F\u8C01\u6740\u5F97\u4E86\uFF1F"
   Choices:
-  - content: 1
-  - content: 2
-  - content: 3
-  - content: 4
+  - content: "\u6211\u786E\u5B9A\u4ED6\u662F\u4F60\u6740\u7684"
+  - content: "\u6211\u73B0\u5728\u8FD8\u6CA1\u6709\u5934\u7EEA"
 --- !u!114 &-5794715703117405301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +124,7 @@ MonoBehaviour:
   m_Name: Event
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1080, y: -168}
+  position: {x: 584, y: -280}
   ports:
     keys:
     - In
@@ -156,6 +137,9 @@ MonoBehaviour:
       connections:
       - fieldName: Out
         node: {fileID: -8472951465277320163}
+        reroutePoints: []
+      - fieldName: Out
+        node: {fileID: 8086208015145070544}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -203,7 +187,8 @@ MonoBehaviour:
   - {fileID: -5794715703117405301}
   - {fileID: -6645762211042788554}
   - {fileID: -8472951465277320163}
-  state: 0
+  - {fileID: 8086208015145070544}
+  state: 1
   _entryNode: {fileID: 6017274788962675296}
 --- !u!114 &6017274788962675296
 MonoBehaviour:
@@ -218,7 +203,7 @@ MonoBehaviour:
   m_Name: Entry
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -504, y: -328}
+  position: {x: -424, y: -248}
   ports:
     keys:
     - Out
@@ -235,4 +220,54 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  Out: 0
+--- !u!114 &8086208015145070544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844548014bc277941898881dc7911cb9, type: 3}
+  m_Name: Talk
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 216, y: -216}
+  ports:
+    keys:
+    - In
+    - Out
+    values:
+    - _fieldName: In
+      _node: {fileID: 8086208015145070544}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Choices 1
+        node: {fileID: -6645762211042788554}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Out
+      _node: {fileID: 8086208015145070544}
+      _typeQualifiedName: System.Byte, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: In
+        node: {fileID: -5794715703117405301}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  In: 0
+  talker:
+    talkerHead: {fileID: 21300000, guid: f54a97d483847894c8a1a9a3678d4d2e, type: 3}
+    talkerName: "\u738B\u5929\u6865"
+  content:
+  - "\u6CA1\u5173\u7CFB\u4F60\u53EF\u4EE5\u6162\u6162\u601D\u8003"
   Out: 0

@@ -7,11 +7,13 @@ using UnityEngine.AddressableAssets;
 using DreamerTool.UI;
 public class TestScene : Scene
 {
+   
     private DialogueGraph dialogueGraph;
    public GameObject controller;
    private async void Awake()
    {
       base.Awake();
+      
       await GloablManager.Instance.GameInit();
       controller.SetActive(true);
       var monster_1 = new MonsterInfo(MonsterSet.Get(1));
@@ -19,6 +21,8 @@ public class TestScene : Scene
       GloablManager.Instance.PlayerInfo.AddMonster(monster_1);
       GloablManager.Instance.PlayerInfo.AddMonster(monster_2);
       View.CurrentScene.GetView<MonsterInfoView>().SetModel(monster_1);
+      
+     
    }
 
    public void PlayDialogueGraph(DialogueGraph graph)
